@@ -7,7 +7,7 @@
 namespace esphome {
 namespace cse7766 {
 
-class CSE7766Component : public PollingComponent, public uart::UARTDevice {
+class CSE7766Component : public Component, public uart::UARTDevice {
  public:
   void set_voltage_sensor(sensor::Sensor *voltage_sensor) { voltage_sensor_ = voltage_sensor; }
   void set_current_sensor(sensor::Sensor *current_sensor) { current_sensor_ = current_sensor; }
@@ -16,7 +16,6 @@ class CSE7766Component : public PollingComponent, public uart::UARTDevice {
 
   void loop() override;
   float get_setup_priority() const override;
-  void update() override;
   void dump_config() override;
 
  protected:
@@ -31,14 +30,8 @@ class CSE7766Component : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *current_sensor_{nullptr};
   sensor::Sensor *power_sensor_{nullptr};
   sensor::Sensor *energy_sensor_{nullptr};
-  float voltage_acc_{0.0f};
-  float current_acc_{0.0f};
-  float power_acc_{0.0f};
   float energy_total_{0.0f};
   uint32_t cf_pulses_last_{0};
-  uint32_t voltage_counts_{0};
-  uint32_t current_counts_{0};
-  uint32_t power_counts_{0};
 };
 
 }  // namespace cse7766
